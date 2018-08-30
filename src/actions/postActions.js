@@ -1,7 +1,7 @@
 import { FETCH_POSTS, NEW_POST } from './types.js'
 
 // This is the es6 syntax
-//export const fetchPosts = () => dispatch() => {
+//export const fetchPosts = () => dispatch => {
 //}
 export function fetchPosts() {
   return function(dispatch) {
@@ -12,5 +12,21 @@ export function fetchPosts() {
         payload: posts
       }))
   }
+}
+
+export const createPost = (postData) => dispatch => {
+  fetch('https://jsonplaceholder.typicode.com/posts', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(postData)
+  })
+    .then(res => res.json())
+    .then(post => dispatch({
+      type: NEW_POST,
+      payload: post
+    }))
+
 }
 
